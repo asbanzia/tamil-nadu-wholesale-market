@@ -1,4 +1,6 @@
+import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Dashboard from "./components/Dashboard";
 
 function App() {
 
@@ -58,6 +60,14 @@ function App() {
 
         <div className="py-10">
           <Signup />
+        </div>
+
+        <div className="py-10">
+          <Login />
+        </div>
+
+        <div className="px-8">
+          <Dashboard />
         </div>
 
         {/* Search Bar */}
