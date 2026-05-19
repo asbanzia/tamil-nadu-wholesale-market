@@ -1,10 +1,38 @@
 function App() {
+
+  const categories = [
+    "Grocery",
+    "Hotel Supplies",
+    "Mobile Accessories",
+    "Electronics",
+    "Textiles",
+    "Industrial"
+  ]
+
+  const products = [
+    {
+      name: "Rice Bags",
+      supplier: "ABC Traders",
+      city: "Chennai"
+    },
+    {
+      name: "Mobile Chargers",
+      supplier: "Smart Electronics",
+      city: "Coimbatore"
+    },
+    {
+      name: "Hotel Chicken Supply",
+      supplier: "Fresh Foods",
+      city: "Vellore"
+    }
+  ]
+
   return (
     <div className="min-h-screen bg-gray-100">
 
       {/* Navbar */}
       <nav className="bg-blue-700 text-white px-8 py-4 flex justify-between items-center shadow-lg">
-        
+
         <h1 className="text-2xl font-bold">
           Tamil Nadu Wholesale Market
         </h1>
@@ -42,6 +70,83 @@ function App() {
         </div>
 
       </section>
+
+      {/* Categories Section */}
+      <section className="px-8 py-10">
+
+        <h2 className="text-3xl font-bold mb-8 text-center">
+          Popular Categories
+        </h2>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+
+          {categories.map((category, index) => (
+            <div
+              key={index}
+              className="bg-white p-6 rounded-xl shadow-md text-center hover:shadow-xl cursor-pointer"
+            >
+              <h3 className="font-semibold text-lg">
+                {category}
+              </h3>
+            </div>
+          ))}
+
+        </div>
+
+      </section>
+
+      {/* Product Cards */}
+      <section className="px-8 py-10">
+
+        <h2 className="text-3xl font-bold mb-8 text-center">
+          Featured Products
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-6">
+
+          {products.map((product, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-xl shadow-lg p-6"
+            >
+
+              <div className="h-40 bg-gray-200 rounded-lg mb-4"></div>
+
+              <h3 className="text-2xl font-bold mb-2">
+                {product.name}
+              </h3>
+
+              <p className="text-gray-600 mb-1">
+                Supplier: {product.supplier}
+              </p>
+
+              <p className="text-gray-600 mb-4">
+                City: {product.city}
+              </p>
+
+              <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+                Contact Supplier
+              </button>
+
+            </div>
+          ))}
+
+        </div>
+
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-blue-700 text-white text-center py-6 mt-10">
+
+        <h2 className="text-xl font-bold mb-2">
+          Tamil Nadu Wholesale Market
+        </h2>
+
+        <p>
+          Connecting suppliers and buyers digitally across Tamil Nadu.
+        </p>
+
+      </footer>
 
     </div>
   )
