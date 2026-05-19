@@ -1,3 +1,5 @@
+import Signup from "./components/Signup";
+
 function App() {
 
   const categories = [
@@ -53,6 +55,10 @@ function App() {
         <p className="text-xl text-gray-600 max-w-2xl mb-10">
           Connect buyers, wholesalers, distributors and suppliers across Tamil Nadu.
         </p>
+
+        <div className="py-10">
+          <Signup />
+        </div>
 
         {/* Search Bar */}
         <div className="flex w-full max-w-2xl shadow-lg">
@@ -153,3 +159,4 @@ function App() {
 }
 
 export default App
+
