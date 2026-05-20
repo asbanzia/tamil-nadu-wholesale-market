@@ -1,6 +1,7 @@
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
+import ProductUpload from "./components/ProductUpload";
 import { useEffect, useState } from "react";
 
 import {
@@ -83,11 +84,19 @@ useEffect(() => {
         {
   user ? (
 
+  <div>
+
     <div className="px-8">
       <Dashboard />
     </div>
 
-  ) : (
+    <div className="px-8">
+      <ProductUpload />
+    </div>
+
+  </div>
+
+): (
 
     <div>
 
@@ -103,6 +112,7 @@ useEffect(() => {
 
   )
 }
+
 
         {/* Search Bar */}
         <div className="flex w-full max-w-2xl shadow-lg">
