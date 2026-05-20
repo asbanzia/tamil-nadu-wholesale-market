@@ -1,8 +1,30 @@
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
+import { useEffect, useState } from "react";
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from "firebase/auth";
+
+import app from "./firebase";
 
 function App() {
+
+  const auth = getAuth(app);
+
+const [user, setUser] = useState(null);
+
+useEffect(() => {
+
+  onAuthStateChanged(auth, (currentUser) => {
+
+    setUser(currentUser);
+
+  });
+
+}, []);
 
   const categories = [
     "Grocery",
@@ -58,17 +80,29 @@ function App() {
           Connect buyers, wholesalers, distributors and suppliers across Tamil Nadu.
         </p>
 
-        <div className="py-10">
-          <Signup />
-        </div>
+        {
+  user ? (
 
-        <div className="py-10">
-          <Login />
-        </div>
+    <div className="px-8">
+      <Dashboard />
+    </div>
 
-        <div className="px-8">
-          <Dashboard />
-        </div>
+  ) : (
+
+    <div>
+
+      <div className="py-10">
+        <Signup />
+      </div>
+
+      <div className="py-10">
+        <Login />
+      </div>
+
+    </div>
+
+  )
+}
 
         {/* Search Bar */}
         <div className="flex w-full max-w-2xl shadow-lg">

@@ -1,4 +1,25 @@
+import { getAuth, signOut } from "firebase/auth";
+import app from "../firebase";
+
 function Dashboard() {
+
+  const auth = getAuth(app);
+
+  const logoutUser = async () => {
+
+    try {
+
+      await signOut(auth);
+
+      alert("Logout Successful");
+
+    } catch (error) {
+
+      alert(error.message);
+
+    }
+
+  };
 
   return (
 
@@ -8,9 +29,16 @@ function Dashboard() {
         Supplier Dashboard
       </h1>
 
-      <p className="text-gray-600 text-lg">
+      <p className="text-gray-600 text-lg mb-6">
         Welcome to Tamil Nadu Wholesale Market
       </p>
+
+      <button
+        onClick={logoutUser}
+        className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600"
+      >
+        Logout
+      </button>
 
     </div>
 
