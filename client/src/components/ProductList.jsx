@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import {
   getFirestore,
   collection,
-  getDocs
+  getDocs,
+  deleteDoc,
+  doc
 } from "firebase/firestore";
 
 import app from "../firebase";
@@ -11,6 +13,24 @@ import app from "../firebase";
 function ProductList() {
 
   const db = getFirestore(app);
+
+  const deleteProduct = async (id) => {
+
+  try {
+
+    await deleteDoc(doc(db, "products", id));
+
+    alert("Product Deleted");
+
+    fetchProducts();
+
+  } catch (error) {
+
+    alert(error.message);
+
+  }
+
+};
 
   const [products, setProducts] = useState([]);
 
@@ -80,9 +100,20 @@ function ProductList() {
               Category: {product.category}
             </p>
 
-            <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
-              Contact Supplier
-            </button>
+            <div className="flex gap-3">
+
+  <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+    Contact Supplier
+  </button>
+
+  <button
+    onClick={() => deleteProduct(product.id)}
+    className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+  >
+    Delete
+  </button>
+
+</div>
 
           </div>
 
