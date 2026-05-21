@@ -5,7 +5,8 @@ import {
   collection,
   getDocs,
   deleteDoc,
-  doc
+  doc,
+  updateDoc
 } from "firebase/firestore";
 
 import app from "../firebase";
@@ -14,25 +15,15 @@ function ProductList() {
 
   const db = getFirestore(app);
 
-  const deleteProduct = async (id) => {
-
-  try {
-
-    await deleteDoc(doc(db, "products", id));
-
-    alert("Product Deleted");
-
-    fetchProducts();
-
-  } catch (error) {
-
-    alert(error.message);
-
-  }
-
-};
-
   const [products, setProducts] = useState([]);
+
+  const [editingId, setEditingId] = useState(null);
+
+  const [editName, setEditName] = useState("");
+
+  const [editPrice, setEditPrice] = useState("");
+
+  const [editCategory, setEditCategory] = useState("");
 
   const fetchProducts = async () => {
 
@@ -44,11 +35,11 @@ function ProductList() {
 
       const productArray = [];
 
-      querySnapshot.forEach((doc) => {
+      querySnapshot.forEach((docItem) => {
 
         productArray.push({
-          id: doc.id,
-          ...doc.data()
+          id: docItem.id,
+          ...docItem.data()
         });
 
       });
@@ -68,6 +59,64 @@ function ProductList() {
     fetchProducts();
 
   }, []);
+
+  const deleteProduct = async (id) => {
+
+    try {
+
+      await deleteDoc(doc(db, "products", id));
+
+      alert("Product Deleted");
+
+      fetchProducts();
+
+    } catch (error) {
+
+      alert(error.message);
+
+    }
+
+  };
+
+  const editProduct = (product) => {
+
+    setEditingId(product.id);
+
+    setEditName(product.productName);
+
+    setEditPrice(product.price);
+
+    setEditCategory(product.category);
+
+  };
+
+  const updateProduct = async () => {
+
+    try {
+
+      const productRef = doc(db, "products", editingId);
+
+      await updateDoc(productRef, {
+
+        productName: editName,
+        price: editPrice,
+        category: editCategory
+
+      });
+
+      alert("Product Updated");
+
+      setEditingId(null);
+
+      fetchProducts();
+
+    } catch (error) {
+
+      alert(error.message);
+
+    }
+
+  };
 
   return (
 
@@ -100,20 +149,68 @@ function ProductList() {
               Category: {product.category}
             </p>
 
-            <div className="flex gap-3">
+            <div className="flex gap-3 flex-wrap mb-4">
 
-  <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
-    Contact Supplier
-  </button>
+              <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+                Contact Supplier
+              </button>
 
-  <button
-    onClick={() => deleteProduct(product.id)}
-    className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
-  >
-    Delete
-  </button>
+              <button
+                onClick={() => editProduct(product)}
+                className="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600"
+              >
+                Edit
+              </button>
 
-</div>
+              <button
+                onClick={() => deleteProduct(product.id)}
+                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+              >
+                Delete
+              </button>
+
+            </div>
+
+            {
+              editingId === product.id && (
+
+                <div className="mt-6">
+
+                  <input
+                    type="text"
+                    value={editName}
+                    onChange={(e) => setEditName(e.target.value)}
+                    placeholder="Product Name"
+                    className="w-full p-3 border rounded-lg mb-3"
+                  />
+
+                  <input
+                    type="text"
+                    value={editPrice}
+                    onChange={(e) => setEditPrice(e.target.value)}
+                    placeholder="Price"
+                    className="w-full p-3 border rounded-lg mb-3"
+                  />
+
+                  <input
+                    type="text"
+                    value={editCategory}
+                    onChange={(e) => setEditCategory(e.target.value)}
+                    placeholder="Category"
+                    className="w-full p-3 border rounded-lg mb-3"
+                  />
+
+                  <button
+                    onClick={updateProduct}
+                    className="bg-blue-700 text-white px-6 py-3 rounded-lg hover:bg-blue-800"
+                  >
+                    Update Product
+                  </button>
+
+                </div>
+
+              )
+            }
 
           </div>
 
