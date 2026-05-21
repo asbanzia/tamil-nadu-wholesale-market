@@ -2,6 +2,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
 import ProductUpload from "./components/ProductUpload";
+import ProductList from "./components/ProductList";
 import { useEffect, useState } from "react";
 
 import {
@@ -92,6 +93,10 @@ useEffect(() => {
 
     <div className="px-8">
       <ProductUpload />
+    </div>
+
+    <div className="px-8">
+      <ProductList />
     </div>
 
   </div>
